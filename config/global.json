@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "FeedMeFeedback": {
+            "applicationId": "GMS878qYQCgvB68FCzerFKq1TjcHZahOS2hphlRn", 
+            "masterKey": "7gwdWRRzwbd8QZAy2iA04pn0C7Xrf1VHOVMO21iy"
+        }, 
+        "_default": {
+            "link": "FeedMeFeedback"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.2.19"
+    }
+}
