@@ -51,30 +51,30 @@
               <h4 class="modal-title" id="myModalLabel">Add an Event</h4>
             </div>
             <div class="modal-body">
-              <form class="form-horizontal" role="form">
+              <form class="form-horizontal" role="form" id="createEventForm">
                 <div class="form-group">
                   <label for="eventName" class="col-sm-2 control-label">Name</label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" placeholder="Name" id="eventName">
+                    <input type="text" class="form-control" placeholder="Name" id="eventName" name="eventName">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="eventDate" class="col-sm-2 control-label">Date</label>
                   <div class="col-sm-8">
-                    <input type="text" class="span2 form-control" placeholder="Date" data-date-format="mm/dd/yy" id="eventDate">
+                    <input type="text" class="span2 form-control" placeholder="Date" data-date-format="mm/dd/yy" id="eventDate" name="eventDate">
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="eventImage" class="col-sm-2 control-label">Image</label>
                   <div class="col-sm-8">
-                    <input type="file" class="form-control" placeholder="Image" id="eventImage">
+                    <input type="file" class="form-control" placeholder="Image" id="eventImage" name="eventImage">
                   </div>
                 </div>
               </form>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save</button>
+              <button type="button" class="btn btn-primary" onclick="saveEvent()" >Save</button>
             </div>
           </div>
         </div>  
@@ -82,8 +82,10 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.2.19.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/bootstrap-datepicker.js"></script>
+    <script src="js/feedmefeedback.js"></script>
     <script type="text/javascript">
       $('#eventDate').datepicker();
 

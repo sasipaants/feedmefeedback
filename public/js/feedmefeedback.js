@@ -132,6 +132,29 @@ function pastEventList() {
     });	
 }
 
+function saveEvent() {
+  var Event = Parse.Object.extend("Event");
+  var event = new Event();
+
+  var formElement = document.getElementById("createEventForm");
+   
+  event.set("name", formElement.elements["eventName"]);
+  event.set("date", formElement.elements["eventDate"]);
+  event.set("imagePath", formElement.elements["eventImage"]);
+   
+  event.save(null, {
+    success: function(event) {
+      // Execute any logic that should take place after the object is saved.
+      alert('New object created with objectId: ' + event.id);
+    },
+    error: function(event, error) {
+      // Execute any logic that should take place if the save fails.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to create new object, with error code: ' + error.message);
+    }
+  });
+}
+
 function formatParseDate(time, timezone) {
   try {
   	console.log("Convert Date WITH timezone" + time);  	
