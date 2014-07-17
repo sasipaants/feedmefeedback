@@ -1,1 +1,1 @@
-	Parse.initialize("Ok8ye4bKnOx8JM0dEt0oV6NqVwKDwvcYG9ztADdQ", "8HLbHfXM0qJM42K9UmJbCY0uFW0AIVw18tSEuCnm");
+	// Parse.initialize("Ok8ye4bKnOx8JM0dEt0oV6NqVwKDwvcYG9ztADdQ", "8HLbHfXM0qJM42K9UmJbCY0uFW0AIVw18tSEuCnm");
