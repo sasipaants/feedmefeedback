@@ -2,20 +2,100 @@
 <html>
   <head>
     <title>Admin Page</title>
-    <style>
-    body { font-family: Helvetica, Arial, sans-serif; }
-    div { width: 800px; height: 400px; margin: 40px auto; padding: 20px; border: 2px solid #5298fc; }
-    h1 { font-size: 30px; margin: 0; }
-    p { margin: 40px 0; }
-    em { font-family: monospace; }
-    a { color: #5298fc; text-decoration: none; }
-    </style>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/datepicker.css" rel="stylesheet">
+    <link href="css/feedmefeedback.css" rel="stylesheet">
   </head>
   <body>
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">FeedMeFeedback</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a href="./">Sign In</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div> <!-- end navbar -->
+
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+
     <div>
-      <h1>Congratulations! You're already hosting with Parse.</h1>
-      <p>To get started, edit this file at <em>public/index.html</em> and start adding static content.</p>
-      <p>If you want something a bit more dynamic, delete this file and check out <a href="https://parse.com/docs/hosting_guide#webapp">our hosting docs</a>.</p>
+
+      <!-- Button trigger modal -->
+      <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+        Add an Event
+      </button>
+
+      <!-- Modal -->
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="myModalLabel">Add an Event</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form-horizontal" role="form">
+                <div class="form-group">
+                  <label for="eventName" class="col-sm-2 control-label">Name</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" placeholder="Name" id="eventName">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="eventDate" class="col-sm-2 control-label">Date</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="span2 form-control" placeholder="Date" data-date-format="mm/dd/yy" id="eventDate">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="eventImage" class="col-sm-2 control-label">Image</label>
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" placeholder="Image" id="eventImage">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save</button>
+            </div>
+          </div>
+        </div>  
+      </div>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript">
+      $('#eventDate').datepicker();
+
+      $('#addFood').onclick=function(){
+        var html = '';
+        html += '<input type="text" class="form-control" placeholder="Name" id="foodName">';
+        html += '<input type="text" class="form-control" placeholder="Description" id="foodDescription">';
+        html += '<input type="text" class="form-control" placeholder="Image" id="foodImage">';
+        $('#eventFood').append(html);
+
+      };
+    </script>
+
   </body>
 </html>

@@ -48,3 +48,11 @@
 	background-color: #777;
 	width: 100%;
 }
+
+.datepicker {
+	z-index:1151;
+}
+
+.modal-body{
+    max-height: 100%;
+}
