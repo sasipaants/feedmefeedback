@@ -1,4 +1,6 @@
 $( document ).ready(function() {
+  // $('#signinModal').modal('show');
+
   Parse.initialize("GMS878qYQCgvB68FCzerFKq1TjcHZahOS2hphlRn", "RZcrn0SEBKcwJsvp3HAL7sNVKYPI2ZqMBAN43Jnp");
   $('#eventDate').datepicker();
   $('#eventEditDate').datepicker();
@@ -14,9 +16,6 @@ $( document ).ready(function() {
   $(".panel-dislike").click(function() {
     alert( "Handler for .click() called." + ($(this).data('id')));
   });
-  currentEventList();
-
-
 });
 
 function currentEventList() {
@@ -35,7 +34,9 @@ function currentEventList() {
         success: function(results) {
            	console.log("Current event: " + JSON.stringify(results));
             if ( results.length > 0 ) {
+
               var result = results[0];
+              var editDiv = $("<div class='edit-panel col-md-4' onclick='getEvent(\""+result.id+"\")'><div class='edit-text'>EDIT</div></div>");              
               var imgUrl = "";
               if ( typeof result.get("image").url() != 'undefined' ) {
                 imgUrl = result.get("image").url();
@@ -46,6 +47,9 @@ function currentEventList() {
               $("#card-current-event-name").text(result.get("name"));
               $("#current-event-img").attr("src",imgUrl);
               $("#card-current-event").attr("data-id", result.id);
+              if ( isAdmin() ) {
+                $("#card-admin-current").append(editDiv);
+              }
               upcomingEventList();
             } else {
               $("#current-event").hide();
@@ -140,8 +144,10 @@ function displayEvents(events, eType) {
 
 
               // <button class="btn-add" data-toggle="modal" data-target="#myModal">+</button>
-  var admin = true;
+  var admin = isAdmin() ;
   var len = events.length;
+  var addBtnDiv = $("<button class='btn-add' data-toggle='modal' data-target='#myModal'>+</button>");
+
   $("#"+ eType +"-event-row").empty();
 
   for ( var i = 0 ; i < len ; i++ ) {
@@ -150,18 +156,27 @@ function displayEvents(events, eType) {
       imgUrl = events[i].get("image").url();
     }
     // console.log("Event ID " + JSON.stringify(events[i]));
+    var cardDiv = $("<div class='card-admin'></div>");
     var colDiv = $("<div id='"+events[i].id+"' class='col-md-4 card-event card-" + eType + "-event' onclick='loadFoodPage(\""+events[i].id+"\")' data-id='"+events[i].id+"'></div>");
     var imgDiv = $("<img class='img-square' src='"+ imgUrl +"' />");
     var footerDiv = $("<div class='card-footer'>"+ events[i].get("name") 
       +"<div class='card-footer-date'>"+ formatDate(events[i].get("date")) +"</div></div>");
-    var addBtnDiv = $("<button class='btn-add' data-toggle='modal' data-target='#myModal'>+</button>");
+    var editDiv = $("<div class='edit-panel col-md-4' onclick='getEvent(\""+events[i].id+"\")'><div class='edit-text'>EDIT</div></div>");
+
     colDiv.append(imgDiv);
     colDiv.append(footerDiv);
-    $("#"+ eType +"-event-row").append(colDiv)
+
+    cardDiv.append(colDiv);
     if ( admin ) {
-      $("#"+ eType +"-event-row").append(addBtnDiv);
-    }  
+      cardDiv.append(editDiv);
+    }
+
+    $("#"+ eType +"-event-row").append(cardDiv);
+     
   }
+  if ( admin ) {
+    $("#"+ eType +"-event-row").append(addBtnDiv);
+  } 
 }
 
 function loadFoodPage(eventId) {
@@ -219,9 +234,11 @@ function displayFoods(foods) {
           //   </div>
           // </div>
   var pastEvent = true;
-  var admin = true;        
+  var admin = isAdmin() ;        
   var len = foods.length;
   $("#food-row").empty();
+  var addBtnDiv = $("<button class='btn-add' data-toggle='modal' data-target='#foodModal'>+</button>");
+
   for ( var i = 0 ; i < len ; i++ ) {
     var imgUrl = "";
     if ( typeof foods[i].get("image").url() != 'undefined' ) {
@@ -253,7 +270,6 @@ function displayFoods(foods) {
     var likeCountDiv = $("<p id='count-like-"+foods[i].id+"' class='count-like'>"+foods[i].get("likes")+"</p>");
 
     var editDiv = $("<div class='edit-panel col-md-4' onclick='getFood(\""+foods[i].id+"\")'><div class='edit-text'>EDIT</div></div>");
-    var addBtnDiv = $("<button class='btn-add' data-toggle='modal' data-target='#foodModal'>+</button>");
 
 
     dislikePanelDiv.append(dislikeImgDiv);
@@ -281,9 +297,10 @@ function displayFoods(foods) {
       cardDiv.append(editDiv);
     }
     $("#food-row").append(cardDiv)
-    if ( admin ) {
-      $("#food-row").append(addBtnDiv);
-    }
+  }
+
+  if ( admin ) {
+    $("#food-row").append(addBtnDiv);
   }
 }
 function saveEvent() {
@@ -533,12 +550,14 @@ function incementDisLike(foodId) {
 }
 
 function signIn() {
-  console.log($("#username").val());
+  var entered = $("#username").val();
+  console.log(entered);
+  $("#loggedinUser").text(entered);
   var cookie = "username="+$("#username").val()+"; expires=Fri, 25 Jul 2014 20:47:11 UTC; domain=http://feedmefeedback.parseapp.com/";
   document.cookie= cookie;
-  alert(document.cookie)
+  // alert(document.cookie);
   $('#signinModal').modal('hide');
-
+  currentEventList();
   var name = "username=";
     var ca = document.cookie.split(';');
     for(var i=0; i<ca.length; i++) {
@@ -549,6 +568,78 @@ function signIn() {
         }
     }
     return "";
+}
+
+function setCookie(c_name,value,exdays)
+    {
+      var exdate=new Date();
+      exdate.setDate(exdate.getDate() + exdays);
+      var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
+      document.cookie=c_name + "=" + c_value;
+    }
+    
+    function getCookie(c_name)
+    {
+      var c_value = document.cookie;
+      var c_start = c_value.indexOf(" " + c_name + "=");
+      if (c_start == -1)
+      {
+        c_start = c_value.indexOf(c_name + "=");
+      }
+      if (c_start == -1)
+      {
+        c_value = null;
+      }
+      else
+      {
+        c_start = c_value.indexOf("=", c_start) + 1;
+        var c_end = c_value.indexOf(";", c_start);
+        if (c_end == -1)
+        {
+          c_end = c_value.length;
+        }
+        c_value = unescape(c_value.substring(c_start,c_end));
+      }
+      return c_value;
+    }
+    
+    function checkCookie()
+    {
+      var username=getCookie("username");
+      if (username!=null && username!="")
+      {
+          $("#loggedinUser").text(username);
+          document.getElementById("username").innerHTML = (username);
+      }
+      else 
+      {
+        username=prompt("Please enter your name:","");
+        username = $.trim(username);
+        if (username!=null && username!="" && username!="null" && username.length > 2)
+        {
+          setCookie("username",username,90);
+          $("#loggedinUser").text(username);
+          document.getElementById("username").innerHTML = (username);
+        } else {
+          username = null;
+          alert("Please enter valid username of 2 or more characters.");
+          checkCookie();
+        }
+      }
+    }
+    
+    function deleteUsernameCookie() {
+
+        document.cookie = 'username=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+        location.reload();
+
+    };
+
+function isAdmin() {
+  if ( ($("#loggedinUser").text()) == "Admin" ) {
+    return true;
+  }
+  return false;
 }
 
 function formatParseDate(time, timezone) {
