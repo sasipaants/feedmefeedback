@@ -202,8 +202,8 @@ function saveFood() {
 
   food.set("name", $("#foodName").val());
   food.set("description", $("#foodDescription").val());
-  food.set("likes", 1);
-  food.set("dislikes", 1)
+  food.set("likes", 0);
+  food.set("dislikes", 0)
   //TODO: add eventId
   food.set("eventId", "");
 
