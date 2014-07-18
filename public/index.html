@@ -63,7 +63,7 @@
             </div>
             
           </div><!-- /.col-lg-3 -->
-          <div class="col-md-4 card-event card-current-event" onclick="$.mobile.changePage( '#food', { transition: 'slide'} )">
+          <div id="card-current-event" class="col-md-4 card-event card-current-event" >
             <img class="img-square" id="current-event-img" src="" alt="Generic placeholder image">
             <div class="card-footer" id="card-current-event-name">
               
@@ -99,7 +99,144 @@
 
         <button class="btn-add" data-toggle="modal" data-target="#myModal">+</button>
 
-      <!-- Modal -->
+
+    </div>
+      </div>
+    </div>
+  </div> <!-- end of event page -->
+
+  <div id="food" data-role="page">
+    <div class="row">
+      <div class="container food-container">
+        <div class="col-md-8 card-food-event">
+          <div id="food-event-name">Hack day</div>  
+          <div id="food-event-date">July 2014</div>
+        </div><!-- /.col-md-8 -->
+      </div>
+      
+    </div><!-- /.row -->
+
+    <div id="food-banner" class="food-banner">
+      <div class="container main-container" style="padding-top:30px;">
+        <div class="row" style="overflow:hidden">
+
+
+          <div class="card-admin">
+            <div class="col-md-4 card-food card-current-event" onclick="$.mobile.changePage( '#food', { transition: 'slide'} )">
+              <img class="img-square" src="" alt="Generic placeholder image">
+              <div class="card-footer" id="card-current-event-name">
+                <div class="card-footer">
+                 Hack Day
+                 <div class="card-footer-date">
+                   July 17, 2014
+                 </div>
+               </div>
+              </div>
+              <div class="card-button-panel">
+                <div class="panel-dislike">
+                  <img class="btn-vote btn-dislike" src="img/btn-dislike.png"/>
+                  <p class="count-dislike">5</p>
+                </div>
+                <div class="panel-comment">
+                  <img class="btn-vote btn-comment" src="img/btn-comment.png"/>
+                  <p class="count-comment">5</p>
+                </div>
+                <div class="panel-like">
+                  <img class="btn-vote btn-like" src="img/btn-like.png"/>
+                  <p class="count-like">5</p>
+                </div>
+                
+              </div>
+            </div><!-- /.col-lg-3 -->
+            
+          </div>
+
+
+          <div class="card-admin">
+            <div class="col-md-4 card-food card-current-event" onclick="$.mobile.changePage( '#food', { transition: 'slide'} )">
+              <img class="img-square" src="" alt="Generic placeholder image">
+              <div class="card-footer" id="card-current-event-name">
+                <div class="card-footer">
+                 Hack Day
+                 <div class="card-footer-date">
+                   July 17, 2014
+                 </div>
+               </div>
+              </div>
+              <div class="card-button-panel">
+                <div class="panel-dislike">
+                  <img class="btn-vote btn-dislike" src="img/btn-dislike.png"/>
+                  <p class="count-dislike">5</p>
+                </div>
+                <div class="panel-comment">
+                  <img class="btn-vote btn-comment" src="img/btn-comment.png"/>
+                  <p class="count-comment">5</p>
+                </div>
+                <div class="panel-like">
+                  <img class="btn-vote btn-like" src="img/btn-like.png"/>
+                  <p class="count-like">5</p>
+                </div>
+                
+              </div>
+            </div><!-- /.col-lg-3 -->
+
+          </div>
+
+
+          <div class="card-admin">
+            <div class="col-md-4 card-food card-current-event" onclick="$.mobile.changePage( '#food', { transition: 'slide'} )">
+              <img class="img-square" src="" alt="Generic placeholder image">
+              <div class="card-footer" id="card-current-event-name">
+                <div class="card-footer">
+                 Hack Day
+                 <div class="card-footer-date">
+                   July 17, 2014
+                 </div>
+               </div>
+              </div>
+              <div class="card-button-panel">
+                <div class="panel-dislike">
+                  <img class="btn-vote btn-dislike" src="img/btn-dislike.png"/>
+                  <p class="count-dislike">5</p>
+                </div>
+                <div class="panel-comment">
+                  <img class="btn-vote btn-comment" src="img/btn-comment.png"/>
+                  <p class="count-comment">5</p>
+                </div>
+                <div class="panel-like">
+                  <img class="btn-vote btn-like" src="img/btn-like.png"/>
+                  <p class="count-like">5</p>
+                </div>
+                
+              </div>
+            </div><!-- /.col-lg-3 -->
+          </div>
+        </div><!-- /.row -->
+      </div>
+
+
+
+      </div>
+    </div>
+
+    <button class="btn-add" data-toggle="modal" data-target="#myModal">+</button>
+
+
+  </div><!-- end of food page -->
+
+
+
+
+
+
+
+
+
+
+
+  <!-- ALL MODALS -->
+
+  <!-- Event Modal -->
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -136,65 +273,125 @@
           </div>
         </div>  
       </div>
-    </div>
-      </div>
-    </div>
-  </div> <!-- end of event page -->
 
-  <div id="food" data-role="page">
-    <div class="row">
-      <div class="container food-container">
-        <div class="col-md-8 card-food-event">
-          <div id="food-event-name">Hack day</div>  
-          <div id="food-event-date">July 2014</div>
-        </div><!-- /.col-md-8 -->
-      </div>
-      
-    </div><!-- /.row -->
-
-    <div id="food-banner" class="food-banner">
-      <div class="container main-container" style="padding-top:30px;">
-        <div class="row">
-
-          <div class="card-admin">
-            <div class="col-md-4 card-food card-current-event" onclick="$.mobile.changePage( '#food', { transition: 'slide'} )">
-              <img class="img-square" src="" alt="Generic placeholder image">
-              <div class="card-footer" id="card-current-event-name">
-                <div class="card-footer">
-                 Hack Day
-                 <div class="card-footer-date">
-                   July 17, 2014
-                 </div>
-               </div>
-              </div>
-              <div class="card-button-panel">
-                <div class="panel-dislike">
-                  <img class="btn-vote btn-dislike" src="img/btn-dislike.png"/>
-                  <p class="count-dislike">5</p>
-                </div>
-                <div class="panel-like">
-                  <img class="btn-vote btn-like" src="img/btn-like.png"/>
-                  <p class="count-like">5</p>
-                </div>
-                
-              </div>
-            </div><!-- /.col-lg-3 -->
-            
-            <div class="edit-panel" onclick="getFood('id1')">
-              EDIT
+  <!-- Edit Event Modal -->
+      <div class="modal fade" id="eventEditModal" tabindex="-1" role="dialog" aria-labelledby="eventEditModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="eventEditModalLabel">Add an Event</h4>
             </div>
-            <!-- <img src="img/editicon.png" class="edit-icon" /> -->
-          </div><!-- /.row -->
-        </div>
-
-
-
+            <div class="modal-body">
+              <form class="form-horizontal" role="form" id="createEventEditForm">
+                <div class="form-group">
+                  <label for="eventEditName" class="col-sm-2 control-label">Name</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="eventEditName" name="eventEditName">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="eventEditDate" class="col-sm-2 control-label">Date</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="span2 form-control" data-date-format="mm/dd/yy" id="eventEditDate" name="eventEditDate">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="eventEditImage" class="col-sm-2 control-label">Image</label>
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" id="eventEditImage" name="eventEditImage">
+                  </div>
+                </div>
+                <input type="hidden" id="eventEditId" name="eventEditId">
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="updateEvent()" >Save</button>
+            </div>
+          </div>
+        </div>  
       </div>
     </div>
 
-    <button class="btn-add" data-toggle="modal" data-target="#myModal">+</button>
 
+    <!-- Food Modal -->
+      <div class="modal fade" id="foodModal" tabindex="-1" role="dialog" aria-labelledby="foodModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+              <h4 class="modal-title" id="foodModalLabel">Add Food</h4>
+            </div>
+            <div class="modal-body">
+              <form class="form-horizontal" role="form" id="createFoodForm">
+                <div class="form-group">
+                  <label for="foodName" class="col-sm-2 control-label">Name</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="foodName" name="foodName">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="foodDescription" class="col-sm-2 control-label">Description</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control" id="foodDescription" name="foodDescription">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="foodImage" class="col-sm-2 control-label">Image</label>
+                  <div class="col-sm-8">
+                    <input type="file" class="form-control" id="foodImage" name="foodImage">
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="saveFood()" >Save</button>
+            </div>
+          </div>
+        </div>  
+      </div>
 
-  </div><!-- end of food page -->
+  <!-- Food Edit Modal -->
+  <div class="modal fade" id="foodEditModal" tabindex="-1" role="dialog" aria-labelledby="foodEditModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="foodEditModalLabel">Edit Food</h4>
+        </div>
+        <div class="modal-body">
+          <form class="form-horizontal" role="form" id="createFoodEditForm">
+            <div class="form-group">
+              <label for="foodEditName" class="col-sm-2 control-label">Name</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="foodEditName" name="foodEditName">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="foodEditDescription" class="col-sm-2 control-label">Description</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="foodEditDescription" name="foodEditDescription">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="foodEditImage" class="col-sm-2 control-label">Image</label>
+              <div class="col-sm-8">
+                <input type="file" class="form-control" id="foodEditImage" name="foodEditImage">
+              </div>
+            </div>
+            <input type="hidden" id="foodEditId" name="foodEditId">
+
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" onclick="updateFood()" >Save</button>
+        </div>
+      </div>
+    </div>  
+  </div>
+
   </body>
 </html>

@@ -17,6 +17,7 @@
 
 
 .btn-vote {
+	cursor: pointer;
 	width: 40px;
 }
 .breadcrumb {
@@ -24,8 +25,11 @@
 }
 
 .card-admin {
+	margin: 6px;
+	float: left;
 	width: 235px;
 	box-shadow: 3px 3px 5px rgb(95, 94, 94);
+
 }
 
 .card-button-panel {
@@ -46,7 +50,7 @@
 .card-food {
 	background-color: #fff;
 	box-shadow: 3px 3px 5px rgb(95, 94, 94);
-	cursor: pointer;
+	/*cursor: pointer;*/
 	/*margin: 6px;*/
 	padding: 15px;
 	width: 235px;
@@ -82,6 +86,11 @@
 
 .card-upcoming-event {
 	/*background-color: #fff3e3;*/
+}
+
+.count-comment {
+	color: #ff831e;
+	text-align: center;
 }
 
 .count-dislike {
@@ -178,6 +187,13 @@
 }
 
 
+.panel-comment {
+	position: absolute;
+	right: 39%;
+
+
+}
+
 .panel-dislike {
 	position: absolute;
 
@@ -222,6 +238,22 @@
 	z-index:1151;
 }
 
-.modal-body{
-    max-height: 100%;
+.modal-header {
+	background-color: #535353;
+	color: #FFF;
 }
+
+.modal-footer {
+
+}
+
+.modal-footer .btn-primary {
+	background-color: #1d7865;
+	border-color: #1d7865;
+	color: #FFF;
+}
+
+.modal span {
+	color: #fff;
+}
+

@@ -1,7 +1,18 @@
 $( document ).ready(function() {
   Parse.initialize("GMS878qYQCgvB68FCzerFKq1TjcHZahOS2hphlRn", "RZcrn0SEBKcwJsvp3HAL7sNVKYPI2ZqMBAN43Jnp");
   $('#eventDate').datepicker();
+  $('#eventEditDate').datepicker();
+
+  $("#card-current-event").click(function() {
+    console.log("Clicking card " );
+    alert( "Handler for .click() called." + ($(this).data("id")));
+    loadFoodPage($(this).data("id"));
+    // displayFoods($(this).get("eventId"));
+    // $.mobile.changePage( '#food', { transition: 'slide'} );
+  });
   currentEventList();
+
+
 });
 
 function getEvents() {
@@ -21,11 +32,16 @@ function currentEventList() {
     currentEventQuery.get(null,{
         success: function(result) {
            	console.log("Current event: " + JSON.stringify(result));
-            console.log("Img URL: " + JSON.stringify(result.get("imagePath").url()));
+            var imgUrl = "";
+            if ( typeof result.get("image").url() != 'undefined' ) {
+              imgUrl = result.get("image").url();
+            }
+            console.log("Image URL " + imgUrl);
             $("#current-event-name").text(result.get("name"));
             $("#current-event-date").text(formatDateLong(result.get("date")));
             $("#card-current-event-name").text(result.get("name"));
-            $("#current-event-img").attr("src",result.get("imagePath").url());
+            $("#current-event-img").attr("src",imgUrl);
+            $("#card-current-event").attr("data-id", result.id);
             upcomingEventList();
         },
         error: function(error) {
@@ -93,11 +109,11 @@ function displayEvents(events, eType) {
           var len = events.length;
           for ( var i = 0 ; i < len ; i++ ) {
             var imgUrl = "";
-            if ( typeof events[i].get("imagePath").url() != 'undefined' ) {
-              imgUrl = events[i].get("imagePath").url();
+            if ( typeof events[i].get("image").url() != 'undefined' ) {
+              imgUrl = events[i].get("image").url();
             }
-            console.log("Image URL " + imgUrl);
-            var colDiv = $("<div class='col-md-4 card-event card-" + eType + "-event'></div>");
+            console.log("Event ID " + JSON.stringify(events[i]));
+            var colDiv = $("<div id='"+events[i].id+"' class='col-md-4 card-event card-" + eType + "-event' onclick='loadFoodPage("+events[i].id+")' data-id='"+events[i].id+"'></div>");
             var imgDiv = $("<img class='img-square' src='"+ imgUrl +"' />");
             var footerDiv = $("<div class='card-footer'>"+ events[i].get("name") 
               +"<div class='card-footer-date'>"+ formatDate(events[i].get("date")) +"</div></div>");
@@ -113,6 +129,13 @@ function displayEvents(events, eType) {
 
 }
 
+function loadFoodPage(eventId) {
+  $.mobile.changePage( '#food', { transition: 'slide'} );
+}
+
+function displayFoods(eventId) {
+
+}
 function saveEvent() {
   var Event = Parse.Object.extend("Event");
   var event = new Event();
@@ -147,36 +170,60 @@ function saveEvent() {
   });
 }
 
-function editEvent() {
+function getEvent(eventId) {
   var Event = Parse.Object.extend("Event");
-  var event = new Event();
-  var eventDate = $("#eventDate").val();
-
-  var fileUploadControl = $("#eventImage")[0];
-  if (fileUploadControl.files.length > 0) {
-    var file = fileUploadControl.files[0];
-    var name = "photo.jpg";
-   
-    var parseFile = new Parse.File(name, file);
-
-    parseFile.save().then(function() {
-    }, function(error) {
-      alert('Failed to upload image: ' + error.message);
-    });
-    event.set("image", parseFile);
-  }
-
-  event.set("name", $("#eventName").val());
-  event.set("date", new Date(eventDate));
-   
-  event.save(null, {
+  var query = new Parse.Query(Event);
+  query.get(eventId, {
     success: function(event) {
-      $('#eventModal').modal('hide');
+      var eventDate = formatDateSimple(event.get("date"));
+      $('#eventEditModal').modal('show');
+      $("#eventEditName").val(event.get("name"));
+      $("#eventEditDate").val(eventDate);
+      $("#eventEditId").val(eventId);
     },
-    error: function(d, error) {
-      // Execute any logic that should take place if the save fails.
+    error: function(object, error) {
+      // The object was not retrieved successfully.
       // error is a Parse.Error with an error code and description.
-      alert('Failed to create new object, with error code: ' + error.message);
+      alert('Failed to retrieve object, with error code: ' + error.message);
+    }
+  });
+}
+
+function updateEvent() {
+  var eventId = $("#eventEditId").val();
+  var Event = Parse.Object.extend("Event");
+  var query = new Parse.Query(Event);
+  query.get(eventId, {
+    success: function(event) {
+      console.log("event: " + event.get("date"));
+      var eventDate = $("#eventEditDate").val();
+
+      var fileUploadControl = $("#eventEditImage")[0];
+      if (fileUploadControl.files.length > 0) {
+        var file = fileUploadControl.files[0];
+        var name = "photo.jpg";
+       
+        var parseFile = new Parse.File(name, file);
+
+        parseFile.save().then(function() {
+        }, function(error) {
+          alert('Failed to upload image: ' + error.message);
+        });
+        event.set("image", parseFile);
+      }
+
+      event.set("name", $("#eventEditName").val());
+      event.set("date", new Date(eventDate));
+
+      console.log("date: ", eventDate);
+       
+      event.save();
+      $('#eventEditModal').modal('hide');
+    },
+    error: function(object, error) {
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to retrieve object, with error code: ' + error.message);
     }
   });
 }
@@ -217,6 +264,91 @@ function saveFood() {
   });
 }
 
+function getFood(foodId) {
+  var Food = Parse.Object.extend("Food");
+  var query = new Parse.Query(Food);
+  query.get(foodId, {
+    success: function(food) {
+      $('#foodEditModal').modal('show');
+      $("#foodEditName").val(food.get("name"));
+      $("#foodEditDescription").val(food.get("description"));
+      $("#foodEditId").val(food.id);
+
+    },
+    error: function(object, error) {
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to retrieve object, with error code: ' + error.message);
+    }
+  });
+}
+
+function updateFood() {
+  var foodId = $("#foodEditId").val();
+  var Food = Parse.Object.extend("Food");
+  var query = new Parse.Query(Food);
+  query.get(foodId, {
+    success: function(food) {
+      var fileUploadControl = $("#foodEditImage")[0];
+      if (fileUploadControl.files.length > 0) {
+        var file = fileUploadControl.files[0];
+        var name = "food.jpg";
+       
+        var parseFile = new Parse.File(name, file);
+
+        parseFile.save().then(function() {
+        }, function(error) {
+          alert('Failed to upload image: ' + error.message);
+        });
+        food.set("image", parseFile);
+      }
+
+      food.set("name", $("#foodEditName").val());
+      food.set("description", $("#foodEditDescription").val());
+       
+      food.save();
+      $('#foodEditModal').modal('hide');
+    },
+    error: function(object, error) {
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to retrieve object, with error code: ' + error.message);
+    }
+  });
+}
+
+function incementLike(foodId) {
+  var Food = Parse.Object.extend("Food");
+  var query = new Parse.Query(Food);
+  query.get(foodId, {
+    success: function(food) {
+      food.increment("likes");
+      food.save();
+    },
+    error: function(object, error) {
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to retrieve object, with error code: ' + error.message);
+    }
+  });
+}
+
+function incementDisLike(foodId) {
+  var Food = Parse.Object.extend("Food");
+  var query = new Parse.Query(Food);
+  query.get(foodId, {
+    success: function(food) {
+      food.increment("dislikes");
+      food.save();
+    },
+    error: function(object, error) {
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to retrieve object, with error code: ' + error.message);
+    }
+  });
+}
+
 function formatParseDate(time, timezone) {
   try {
   	console.log("Convert Date WITH timezone" + time);  	
@@ -244,6 +376,16 @@ function formatDate(time, timezone) {
   } catch(e) {
   	console.log("Convert Date without timezone");
     return moment(time).format('ddd MMM DD, YYYY');
+  }
+}
+
+function formatDateSimple(date) {
+  try {
+    console.log("Convert Date, no time");   
+    return moment(date).format('MM/DD/YYYY');
+  } catch(e) {
+    console.log("Convert Date without timezone");
+    return moment(date).format('ddd MM/DD');
   }
 }
 
