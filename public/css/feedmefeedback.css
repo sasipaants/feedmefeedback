@@ -168,6 +168,9 @@
 	color: white !important;
 }
 
+.logo {
+	cursor: pointer;
+}
 .main-container-top {
 	padding-top: 85px;
 }
