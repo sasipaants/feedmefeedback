@@ -169,6 +169,7 @@ function loadFoodPage(eventId) {
   var query = new Parse.Query(Event);
   query.get(eventId, {
     success: function(event) {
+      $("#food-event-id").text(event.id);
       $("#food-event-name").text(event.get("name"));
       $("#food-event-date").text(formatDateLong(event.get("date")));
 
@@ -419,8 +420,11 @@ function saveFood() {
   food.set("description", $("#foodDescription").val());
   food.set("likes", 0);
   food.set("dislikes", 0)
-  //TODO: add eventId
-  food.set("eventId", "");
+  food.set("event_id",  {
+            __type: "Pointer",
+            className: "Event",
+            objectId: $("#food-event-id").text()
+          });
 
   food.save(null, {
     success: function(food) {
