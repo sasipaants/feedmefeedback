@@ -1,11 +1,6 @@
 $( document ).ready(function() {
-<<<<<<< Updated upstream
-	Parse.initialize("GMS878qYQCgvB68FCzerFKq1TjcHZahOS2hphlRn", "RZcrn0SEBKcwJsvp3HAL7sNVKYPI2ZqMBAN43Jnp");
-=======
   Parse.initialize("GMS878qYQCgvB68FCzerFKq1TjcHZahOS2hphlRn", "RZcrn0SEBKcwJsvp3HAL7sNVKYPI2ZqMBAN43Jnp");
   $('#eventDate').datepicker();
-
->>>>>>> Stashed changes
 });
 
 function currentEventList() {
@@ -94,21 +89,6 @@ function pastEventList() {
 }
 
 function saveEvent() {
-<<<<<<< Updated upstream
-  var MyEvent = Parse.Object.extend("Event");
-  var e = new MyEvent();
-
-  var formElement = document.getElementById("createEventForm");
-  console.log("3" + formElement.elements["eventName"]);
-  e.set("name", "test");
-  // e.set("date", formElement.elements["eventDate"]);
-  // e.set("imagePath", formElement.elements["eventImage"]);
-  console.log(e);
-  e.save(null, {
-    success: function(d) {
-      // Execute any logic that should take place after the object is saved.
-      alert('New object created with objectId: ' + d.id);
-=======
   var Event = Parse.Object.extend("Event");
   var event = new Event();
   var eventDate = $("#eventDate").val();
@@ -133,7 +113,6 @@ function saveEvent() {
   event.save(null, {
     success: function(event) {
       $('#eventModal').modal('hide');
->>>>>>> Stashed changes
     },
     error: function(d, error) {
       // Execute any logic that should take place if the save fails.
