@@ -175,13 +175,11 @@
 	padding-bottom: 20px;
 }
 
-.mynav {
-	padding-top: 7px;
-}
-
 .mynav-active {
 	background-image: linear-gradient(to bottom, #ff6400 0%, #ff6400 100%) !important;
 	color: white !important;
+	height: 63px;
+	padding-top: 20px !important;
 }
 
 .mynavbar {

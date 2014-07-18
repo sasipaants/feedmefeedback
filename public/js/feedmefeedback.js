@@ -534,7 +534,8 @@ function incementDisLike(foodId) {
 
 function signIn() {
   console.log($("#username").val());
-  var cookie = "username="+$("#username").val()+"; expires=Fri, 25 Jul 2014 20:47:11 UTC; domain=http://feedmefeedback.parseapp.com/";
+  var cookie = "username="+$("#username").val()+"; expires=Fri, 25 Jul 2014 20:47:11 UTC; domain=http://feedmefeedback.parseapp.com/; path=/";
+  console.log(cookie);
   document.cookie= cookie;
   alert(document.cookie)
   $('#signinModal').modal('hide');
