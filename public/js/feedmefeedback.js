@@ -2,34 +2,54 @@ $( document ).ready(function() {
   Parse.initialize("GMS878qYQCgvB68FCzerFKq1TjcHZahOS2hphlRn", "RZcrn0SEBKcwJsvp3HAL7sNVKYPI2ZqMBAN43Jnp");
   $('#eventDate').datepicker();
   $('#eventEditDate').datepicker();
+
+  $("#card-current-event").click(function() {
+    console.log("Clicking card " );
+    // alert( "Handler for .click() called." + ($(this).data("id")));
+    loadFoodPage($(this).data("id"));
+    // displayFoods($(this).get("eventId"));
+    // $.mobile.changePage( '#food', { transition: 'slide'} );
+  });
+
+  $(".panel-dislike").click(function() {
+    alert( "Handler for .click() called." + ($(this).data('id')));
+  });
+  currentEventList();
+
+
 });
 
 function currentEventList() {
 	var now = new Date();
 	now.setHours(0,0,0,0);
-	var endDay = Date.now();
+	var endDay = new Date();
 	endDay.setHours(23,59,59,59);
 	var Event = Parse.Object.extend("Event");
     var currentEventQuery = new Parse.Query(Event);
-    currentEventQuery.limit(6);
-    currentEventQuery.greaterThan("date", now);
-    currentEventQuery.lessThan("date", endDay);
+    currentEventQuery.limit(1);
+    // currentEventQuery.greaterThan("date", now);
+    // currentEventQuery.lessThan("date", endDay);
     currentEventQuery.get(null,{
         success: function(result) {
-            result.set("status", "OPEN");
-            result.set("taker", null);
-            result.set("type", "emergency");
-            result.save(null, {
-              success: function(gameScore) {
-                getMyShifts();
-              },
-              error: function(gameScore, error) {
-                alert("Failed to save abandon shift. Error: " + error.code + " " + error.message);
-              }
-            });
+           	console.log("Current event: " + JSON.stringify(result));
+            var imgUrl = "";
+            if ( typeof result.get("image").url() != 'undefined' ) {
+              imgUrl = result.get("image").url();
+            }
+            console.log("Image URL " + imgUrl);
+            $("#current-event-name").text(result.get("name"));
+            $("#current-event-date").text(formatDateLong(result.get("date")));
+            $("#card-current-event-name").text(result.get("name"));
+            $("#current-event-img").attr("src",imgUrl);
+            $("#card-current-event").attr("data-id", result.id);
+            upcomingEventList();
         },
         error: function(error) {
-           alert("Failed to get abandon shift " + id + ". Error: " + error.code + " " + error.message);
+           console.log("Failed to get current event. Error: " + error);
+           $("#current-event").hide();
+           $("#upcoming-event").addClass("main-container-top");
+           upcomingEventList();
+
         }
     });
 }
@@ -42,22 +62,17 @@ function upcomingEventList() {
     var upcomingEventQuery = new Parse.Query(Event);
     upcomingEventQuery.limit(3);
     upcomingEventQuery.greaterThan("date", now);
-    upcomingEventQuery.get(null,{
-        success: function(result) {
-            result.set("status", "OPEN");
-            result.set("taker", null);
-            result.set("type", "emergency");
-            result.save(null, {
-              success: function(gameScore) {
-                getMyShifts();
-              },
-              error: function(gameScore, error) {
-                alert("Failed to save abandon shift. Error: " + error.code + " " + error.message);
-              }
-            });
+    upcomingEventQuery.find({
+        success: function(results) {
+          console.log("Upcoming event: " + JSON.stringify(results));
+          displayEvents(results, "upcoming");
+          pastEventList();
         },
         error: function(error) {
-           alert("Failed to get abandon shift " + id + ". Error: " + error.code + " " + error.message);
+           console.log("Failed to get upcoming event. Error: " + error);
+           $("#upcoming-event").hide();
+           $("#past-event").addClass("main-container-top");
+            pastEventList();
         }
     });
 }
@@ -69,26 +84,182 @@ function pastEventList() {
     var pastEventQuery = new Parse.Query(Event);
     pastEventQuery.limit(3);
     pastEventQuery.lessThan("date", now);
-    pastEventQuery.get(null,{
-        success: function(result) {
-            result.set("status", "OPEN");
-            result.set("taker", null);
-            result.set("type", "emergency");
-            result.save(null, {
-              success: function(gameScore) {
-                getMyShifts();
-              },
-              error: function(gameScore, error) {
-                alert("Failed to save abandon shift. Error: " + error.code + " " + error.message);
-              }
-            });
+    pastEventQuery.find({
+        success: function(results) {
+          console.log("Past event: " + JSON.stringify(results));
+          displayEvents(results, "past");
         },
         error: function(error) {
-           alert("Failed to get abandon shift " + id + ". Error: " + error.code + " " + error.message);
+           console.log("Failed to get past event. Error: " + error);
         }
     });	
 }
 
+function getFoodList(eventId) {
+    console.log("Getting food for event " + eventId);
+    var Food = Parse.Object.extend("Food");
+    var foodQuery = new Parse.Query(Food);
+    foodQuery.limit(40);
+    foodQuery.equalTo("event_id", {
+            __type: "Pointer",
+            className: "Event",
+            objectId: eventId
+          });
+    foodQuery.find({
+        success: function(results) {
+          console.log("Found food event_id " + eventId + ": " + JSON.stringify(results));
+          displayFoods(results);
+        },
+        error: function(error) {
+           console.log("Failed to get food for event_id " + eventId + ". Error: " + error);
+        }
+    }); 
+}
+
+function displayEvents(events, eType) {
+          // <div class="col-md-4 card-event card-upcoming-event">
+          //   <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
+          //   <div class="card-footer">
+          //     Hack Day
+          //     <div class="card-footer-date">
+          //       July 17, 2014
+          //     </div>
+          //   </div>
+            
+          // </div><!-- /.col-lg-3 -->
+
+
+              // <button class="btn-add" data-toggle="modal" data-target="#myModal">+</button>
+  var admin = true;
+  var len = events.length;
+  $("#"+ eType +"-event-row").empty();
+
+  for ( var i = 0 ; i < len ; i++ ) {
+    var imgUrl = "";
+    if ( typeof events[i].get("image").url() != 'undefined' ) {
+      imgUrl = events[i].get("image").url();
+    }
+    // console.log("Event ID " + JSON.stringify(events[i]));
+    var colDiv = $("<div id='"+events[i].id+"' class='col-md-4 card-event card-" + eType + "-event' onclick='loadFoodPage(\""+events[i].id+"\")' data-id='"+events[i].id+"'></div>");
+    var imgDiv = $("<img class='img-square' src='"+ imgUrl +"' />");
+    var footerDiv = $("<div class='card-footer'>"+ events[i].get("name") 
+      +"<div class='card-footer-date'>"+ formatDate(events[i].get("date")) +"</div></div>");
+    var addBtnDiv = $("<button class='btn-add' data-toggle='modal' data-target='#myModal'>+</button>");
+    colDiv.append(imgDiv);
+    colDiv.append(footerDiv);
+    $("#"+ eType +"-event-row").append(colDiv)
+    if ( admin ) {
+      $("#"+ eType +"-event-row").append(addBtnDiv);
+    }  
+  }
+}
+
+function loadFoodPage(eventId) {
+  getFoodList(eventId);
+  $.mobile.changePage( '#food', { transition: 'slide'} );
+}
+
+function displayFoods(foods) {
+
+          // <div class="card-admin">
+          //   <div class="col-md-4 card-food card-current-event">
+          //     <img class="img-square" src="" alt="Generic placeholder image">
+          //     <div class="card-footer">
+          //       <div class="card-footer">
+          //        Hack Day
+          //        <div class="card-footer-date">
+          //          July 17, 2014
+          //        </div>
+          //      </div>
+          //     </div>
+          //     <div class="card-button-panel">
+          //       <div class="panel-dislike">
+          //         <img class="btn-vote btn-dislike" src="img/btn-dislike.png"/>
+          //         <p class="count-dislike">5</p>
+          //       </div>
+          //       <div class="panel-comment">
+          //         <img class="btn-vote btn-comment" src="img/btn-comment.png"/>
+          //         <p class="count-comment">5</p>
+          //       </div>
+          //       <div class="panel-like">
+          //         <img class="btn-vote btn-like" src="img/btn-like.png"/>
+          //         <p class="count-like">5</p>
+          //       </div>
+                
+          //     </div>
+          //   </div><!-- /.col-md-4 -->
+          //   <div class="edit-panel col-md-4">
+          //     <div class="edit-text">EDIT</div>
+          //   </div>
+          // </div>
+  var pastEvent = true;
+  var admin = true;        
+  var len = foods.length;
+  $("#food-row").empty();
+  for ( var i = 0 ; i < len ; i++ ) {
+    var imgUrl = "";
+    if ( typeof foods[i].get("image").url() != 'undefined' ) {
+      imgUrl = foods[i].get("image").url();
+    }
+    console.log("Food " + JSON.stringify(foods[i]));
+
+    var pastEventClass = "";
+    if ( pastEvent ) {
+      pastEventClass = " card-food-past ";
+    }
+
+    var cardDiv = $("<div class='card-admin'></div>");
+    var colDiv = $("<div id='"+foods[i].id+"' class='col-md-4 card-food "+ pastEventClass+"'></div>");
+    var imgDiv = $("<img class='img-square' src='"+ imgUrl +"' />");
+    var footerDiv = $("<div class='card-footer'>"+ foods[i].get("name") 
+      +"<div class='card-footer-date'>"+ (foods[i].get("description")) +"</div></div>");
+    var buttonPanelDiv = $("<div class='card-button-panel'></div>");
+    var dislikePanelDiv = $("<div id='panel-dislike-"+foods[i].id+"' data-id='"+foods[i].id+"' class='panel-dislike'></div>"); 
+    var commentPanelDiv = $("<div id='panel-comment-"+foods[i].id+"' data-id='"+foods[i].id+"' class='panel-comment'></div>"); 
+    var likePanelDiv = $("<div id='panel-like-"+foods[i].id+"' data-id='"+foods[i].id+"' class='panel-like'></div>"); 
+
+    var dislikeImgDiv = $("<img class='btn-vote btn-dislike' src='img/btn-dislike.png' onclick='incementDisLike(\""+foods[i].id+"\")'/>");
+    var commentImgDiv = $("<img class='btn-vote btn-comment' src='img/btn-comment.png'/> ");
+    var likeImgDiv = $("<img class='btn-vote btn-like' src='img/btn-like.png' onclick='incementLike(\""+foods[i].id+"\")'/>");
+
+    var dislikeCountDiv = $("<p id='count-dislike-"+foods[i].id+"' class='count-dislike'>"+foods[i].get("dislikes")+"</p>");
+    var commentCountDiv = $("<p id='count-comment-"+foods[i].id+"' class='count-comment'>0</p>");
+    var likeCountDiv = $("<p id='count-like-"+foods[i].id+"' class='count-like'>"+foods[i].get("likes")+"</p>");
+
+    var editDiv = $("<div class='edit-panel col-md-4' onclick='getFood(\""+foods[i].id+"\")'><div class='edit-text'>EDIT</div></div>");
+    var addBtnDiv = $("<button class='btn-add' data-toggle='modal' data-target='#foodModal'>+</button>");
+
+
+    dislikePanelDiv.append(dislikeImgDiv);
+    dislikePanelDiv.append(dislikeCountDiv);
+
+    commentPanelDiv.append(commentImgDiv);
+    commentPanelDiv.append(commentCountDiv);
+
+    likePanelDiv.append(likeImgDiv);
+    likePanelDiv.append(likeCountDiv);
+
+    buttonPanelDiv.append(dislikePanelDiv);
+    buttonPanelDiv.append(commentPanelDiv);
+    buttonPanelDiv.append(likePanelDiv);
+
+    colDiv.append(imgDiv);
+    colDiv.append(footerDiv);
+    if ( pastEvent ) {
+      colDiv.append(buttonPanelDiv);      
+    }
+    console.log(colDiv);
+
+    cardDiv.append(colDiv);
+    if ( admin ) {
+      cardDiv.append(editDiv);
+    }
+    $("#food-row").append(cardDiv)
+    if ( admin ) {
+      $("#food-row").append(addBtnDiv);
+    }
+  }
+}
 function saveEvent() {
   var Event = Parse.Object.extend("Event");
   var event = new Event();
@@ -280,6 +451,10 @@ function incementLike(foodId) {
     success: function(food) {
       food.increment("likes");
       food.save();
+      console.log("Updated like on food id " + foodId);
+      var count = parseInt($("#count-like-" + foodId).text());
+      count++;
+      $("#count-like-" + foodId).text(count);
     },
     error: function(object, error) {
       // The object was not retrieved successfully.
@@ -296,6 +471,10 @@ function incementDisLike(foodId) {
     success: function(food) {
       food.increment("dislikes");
       food.save();
+      console.log("Updated dislike on food id " + foodId);
+      var count = parseInt($("#count-dislike-" + foodId).text());
+      count++;
+      $("#count-dislike-" + foodId).text(count);
     },
     error: function(object, error) {
       // The object was not retrieved successfully.
@@ -334,13 +513,23 @@ function formatParseDate(time, timezone) {
   }
 }
 
+function formatDateLong(time, timezone) {
+  try {
+    console.log("Convert Date WITH timezone" + time);   
+    return moment(time).tz(timezone).format('dddd MMMM DD, YYYY');
+  } catch(e) {
+    console.log("Convert Date without timezone");
+    return moment(time).format('dddd MMMM DD, YYYY');
+  }
+}
+
 function formatDate(time, timezone) {
   try {
   	console.log("Convert Date WITH timezone" + time);  	
-    return moment(time).tz(timezone).format('ddd MM/DD');
+    return moment(time).tz(timezone).format('ddd MMM DD, YYYY');
   } catch(e) {
   	console.log("Convert Date without timezone");
-    return moment(time).format('ddd MM/DD');
+    return moment(time).format('ddd MMM DD, YYYY');
   }
 }
 

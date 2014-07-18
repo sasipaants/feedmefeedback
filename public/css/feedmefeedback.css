@@ -2,16 +2,60 @@
     font-family: "Harbell";
     src: url(../fonts/Harbell_Personal_Use.ttf) format("truetype");
 }
+
+.btn-add {
+	background-image: linear-gradient(to bottom, #1d7865 0%, #1d7865 100%) !important;
+	position: absolute;
+	right: 0%;
+	width: 50px !important;
+	top: 375px;
+	border-radius: 0px !important;
+	border-color: #1d7865 !important;
+	color: white !important;
+	font-size: 30px;
+}
+
+
+.btn-vote {
+	cursor: pointer;
+	width: 40px;
+}
 .breadcrumb {
 	border-radius: 0px;
+}
+
+.card-admin {
+	margin: 6px;
+	float: left;
+	width: 235px;
+	box-shadow: 3px 3px 5px rgb(95, 94, 94);
+
+}
+
+.card-button-panel {
+	padding-top: 10px;
+	position: relative;
 }
 .card-event {
 	background-color: #fff;
 	box-shadow: 3px 3px 5px rgb(95, 94, 94);
+	cursor: pointer;
 	margin: 6px;
 	padding: 15px;
 	width: 235px;
 	height: 235px;
+
+}
+
+.card-food {
+	background-color: #fff;
+	box-shadow: 3px 3px 5px rgb(95, 94, 94);
+	/*cursor: pointer;*/
+	/*margin: 6px;*/
+	padding: 15px;
+	width: 235px;
+	height: 235px;
+
 }
 
 .card-footer {
@@ -30,16 +74,33 @@
 	font-size: 12px;
 }
 
-.card-current-event {
-	/*background-color: #d64608;*/
+.card-food-past {
+	height: 310px;
 }
-
+.card-food-event {
+	padding-top: 100px;
+}
 .card-past-event {
 	/*background-color: #a9ccc4;*/
 }
 
 .card-upcoming-event {
 	/*background-color: #fff3e3;*/
+}
+
+.count-comment {
+	color: #ff831e;
+	text-align: center;
+}
+
+.count-dislike {
+	color: #d64608;
+	text-align: center;
+}
+
+.count-like {
+	color: #1d7865;
+	text-align: center;
 }
 
 .current-event {
@@ -58,6 +119,43 @@
 	color: white;
 	text-transform:uppercase;
 }
+.edit-icon {
+	right: 10px;
+	width: 15px;
+}
+.edit-panel {
+	background-color: #535353;
+	color: white;
+	cursor: pointer;
+	text-align: center;
+	padding-bottom: 12px;
+	height: 30px;
+	padding-top: 5px;
+	width: 235px;
+}
+
+.edit-text {
+	margin-bottom: 0px;
+}
+
+.food-banner {
+	background-color: #fff3e3;
+}
+
+.food-container {
+	padding-bottom: 20px;
+}
+#food-event-name {
+	color: white;
+	text-transform:uppercase;
+	font-size: 30px;
+}
+
+#food-event-date {
+	color: white;
+	text-transform:uppercase;
+	font-size: 20px;
+}
 
 .header-name {
 	color: #ff831e;
@@ -67,6 +165,7 @@
 
 .header-menu {
 	font-size: 11px;
+	color: white !important;
 }
 
 .main-container-top {
@@ -81,13 +180,36 @@
 }
 
 .mynav-active {
-	background-image: linear-gradient(to bottom, #1d7865 0%, #1d7865 100%) !important;
+	background-image: linear-gradient(to bottom, #ff6400 0%, #ff6400 100%) !important;
 	color: white !important;
 }
 
+.mynavbar {
+	background-color: #535353;
+	background-image: linear-gradient(to bottom, #535353 0%, #535353 100%)!important;
+}
 .img-square {
 	height: 160px;
 	width: 100%;
+}
+
+
+.panel-comment {
+	position: absolute;
+	right: 39%;
+
+
+}
+
+.panel-dislike {
+	position: absolute;
+
+}
+
+.panel-like {
+	position: absolute;
+	right: 0;
+	top: 10px;
 }
 
 .past-event {
