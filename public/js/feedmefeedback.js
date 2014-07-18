@@ -2,6 +2,10 @@ $( document ).ready(function() {
 	Parse.initialize("GMS878qYQCgvB68FCzerFKq1TjcHZahOS2hphlRn", "RZcrn0SEBKcwJsvp3HAL7sNVKYPI2ZqMBAN43Jnp");
 });
 
+function getEvents() {
+
+}
+
 function currentEventList() {
 	var now = new Date();
 	now.setHours(0,0,0,0);
@@ -9,25 +13,16 @@ function currentEventList() {
 	endDay.setHours(23,59,59,59);
 	var Event = Parse.Object.extend("Event");
     var currentEventQuery = new Parse.Query(Event);
-    currentEventQuery.limit(6);
+    currentEventQuery.limit(1);
     currentEventQuery.greaterThan("date", now);
     currentEventQuery.lessThan("date", endDay);
     currentEventQuery.get(null,{
         success: function(result) {
-            result.set("status", "OPEN");
-            result.set("taker", null);
-            result.set("type", "emergency");
-            result.save(null, {
-              success: function(gameScore) {
-                getMyShifts();
-              },
-              error: function(gameScore, error) {
-                alert("Failed to save abandon shift. Error: " + error.code + " " + error.message);
-              }
-            });
+           console.log("Current event: " + result);
+
         },
         error: function(error) {
-           alert("Failed to get abandon shift " + id + ". Error: " + error.code + " " + error.message);
+           console.log("Failed to get current event. Error: " + error.code + " " + error.message);
         }
     });
 }
