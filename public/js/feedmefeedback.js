@@ -5,14 +5,14 @@ $( document ).ready(function() {
 
   $("#card-current-event").click(function() {
     console.log("Clicking card " );
-    alert( "Handler for .click() called." + ($(this).data("id")));
+    // alert( "Handler for .click() called." + ($(this).data("id")));
     loadFoodPage($(this).data("id"));
     // displayFoods($(this).get("eventId"));
     // $.mobile.changePage( '#food', { transition: 'slide'} );
   });
 
-  $(".panel-dislike").click(function(data) {
-    alert( "Handler for .click() called." + ($(this).data("id")));
+  $(".panel-dislike").click(function() {
+    alert( "Handler for .click() called." + ($(this).data('id')));
   });
   currentEventList();
 
@@ -130,8 +130,10 @@ function displayEvents(events, eType) {
 
 
               // <button class="btn-add" data-toggle="modal" data-target="#myModal">+</button>
-  var admin = false;
+  var admin = true;
   var len = events.length;
+  $("#"+ eType +"-event-row").empty();
+
   for ( var i = 0 ; i < len ; i++ ) {
     var imgUrl = "";
     if ( typeof events[i].get("image").url() != 'undefined' ) {
@@ -145,7 +147,6 @@ function displayEvents(events, eType) {
     var addBtnDiv = $("<button class='btn-add' data-toggle='modal' data-target='#myModal'>+</button>");
     colDiv.append(imgDiv);
     colDiv.append(footerDiv);
-    $("#"+ eType +"-event-row").empty();
     $("#"+ eType +"-event-row").append(colDiv)
     if ( admin ) {
       $("#"+ eType +"-event-row").append(addBtnDiv);
@@ -192,8 +193,9 @@ function displayFoods(foods) {
           //   </div>
           // </div>
   var pastEvent = true;
-  var admin = false;        
+  var admin = true;        
   var len = foods.length;
+  $("#food-row").empty();
   for ( var i = 0 ; i < len ; i++ ) {
     var imgUrl = "";
     if ( typeof foods[i].get("image").url() != 'undefined' ) {
@@ -210,21 +212,21 @@ function displayFoods(foods) {
     var colDiv = $("<div id='"+foods[i].id+"' class='col-md-4 card-food "+ pastEventClass+"'></div>");
     var imgDiv = $("<img class='img-square' src='"+ imgUrl +"' />");
     var footerDiv = $("<div class='card-footer'>"+ foods[i].get("name") 
-      +"<div class='card-footer-date'>"+ formatDate(foods[i].get("date")) +"</div></div>");
+      +"<div class='card-footer-date'>"+ (foods[i].get("description")) +"</div></div>");
     var buttonPanelDiv = $("<div class='card-button-panel'></div>");
     var dislikePanelDiv = $("<div id='panel-dislike-"+foods[i].id+"' data-id='"+foods[i].id+"' class='panel-dislike'></div>"); 
     var commentPanelDiv = $("<div id='panel-comment-"+foods[i].id+"' data-id='"+foods[i].id+"' class='panel-comment'></div>"); 
-    var likePanelDiv = $("<div id='panel-like-"+foods[i].id+"' data-id='"+foods[i].id+"' onclick='incementLike(\""+foods[i].id+"\")'' class='panel-like'></div>"); 
+    var likePanelDiv = $("<div id='panel-like-"+foods[i].id+"' data-id='"+foods[i].id+"' class='panel-like'></div>"); 
 
-    var dislikeImgDiv = $("<img class='btn-vote btn-dislike' src='img/btn-dislike.png'/>");
-    var commentImgDiv = $("<img class='btn-vote btn-comment' src='img/btn-comment.png'/>");
-    var likeImgDiv = $("<img class='btn-vote btn-like' src='img/btn-like.png'/>");
+    var dislikeImgDiv = $("<img class='btn-vote btn-dislike' src='img/btn-dislike.png' onclick='incementDisLike(\""+foods[i].id+"\")'/>");
+    var commentImgDiv = $("<img class='btn-vote btn-comment' src='img/btn-comment.png'/> ");
+    var likeImgDiv = $("<img class='btn-vote btn-like' src='img/btn-like.png' onclick='incementLike(\""+foods[i].id+"\")'/>");
 
     var dislikeCountDiv = $("<p id='count-dislike-"+foods[i].id+"' class='count-dislike'>"+foods[i].get("dislikes")+"</p>");
     var commentCountDiv = $("<p id='count-comment-"+foods[i].id+"' class='count-comment'>0</p>");
     var likeCountDiv = $("<p id='count-like-"+foods[i].id+"' class='count-like'>"+foods[i].get("likes")+"</p>");
 
-    var editDiv = $("<div class='edit-panel col-md-4'><div class='edit-text'>EDIT</div></div>");
+    var editDiv = $("<div class='edit-panel col-md-4' onclick='getFood(\""+foods[i].id+"\")'><div class='edit-text'>EDIT</div></div>");
     var addBtnDiv = $("<button class='btn-add' data-toggle='modal' data-target='#foodModal'>+</button>");
 
 
@@ -252,7 +254,6 @@ function displayFoods(foods) {
     if ( admin ) {
       cardDiv.append(editDiv);
     }
-    $("#food-row").empty();
     $("#food-row").append(cardDiv)
     if ( admin ) {
       $("#food-row").append(addBtnDiv);
@@ -451,7 +452,7 @@ function incementLike(foodId) {
       food.increment("likes");
       food.save();
       console.log("Updated like on food id " + foodId);
-      var count = $("#count-dislike-" + foodId).text();
+      var count = parseInt($("#count-like-" + foodId).text());
       count++;
       $("#count-like-" + foodId).text(count);
     },
@@ -470,6 +471,10 @@ function incementDisLike(foodId) {
     success: function(food) {
       food.increment("dislikes");
       food.save();
+      console.log("Updated dislike on food id " + foodId);
+      var count = parseInt($("#count-dislike-" + foodId).text());
+      count++;
+      $("#count-dislike-" + foodId).text(count);
     },
     error: function(object, error) {
       // The object was not retrieved successfully.
