@@ -24,25 +24,35 @@ function currentEventList() {
 	now.setHours(0,0,0,0);
 	var endDay = new Date();
 	endDay.setHours(23,59,59,59);
+  console.log("Now " + formatDate(now));
+  console.log("End day " + formatDate(endDay));
 	var Event = Parse.Object.extend("Event");
     var currentEventQuery = new Parse.Query(Event);
     currentEventQuery.limit(1);
-    // currentEventQuery.greaterThan("date", now);
-    // currentEventQuery.lessThan("date", endDay);
-    currentEventQuery.get(null,{
-        success: function(result) {
-           	console.log("Current event: " + JSON.stringify(result));
-            var imgUrl = "";
-            if ( typeof result.get("image").url() != 'undefined' ) {
-              imgUrl = result.get("image").url();
+    currentEventQuery.greaterThan("date", now);
+    currentEventQuery.lessThan("date", endDay);
+    currentEventQuery.find({
+        success: function(results) {
+           	console.log("Current event: " + JSON.stringify(results));
+            if ( results.length > 0 ) {
+              var result = results[0];
+              var imgUrl = "";
+              if ( typeof result.get("image").url() != 'undefined' ) {
+                imgUrl = result.get("image").url();
+              }
+              console.log("Image URL " + imgUrl);
+              $("#current-event-name").text(result.get("name"));
+              $("#current-event-date").text(formatDateLong(result.get("date")));
+              $("#card-current-event-name").text(result.get("name"));
+              $("#current-event-img").attr("src",imgUrl);
+              $("#card-current-event").attr("data-id", result.id);
+              upcomingEventList();
+            } else {
+              $("#current-event").hide();
+              $("#upcoming-event").addClass("main-container-top");
+              upcomingEventList(); 
             }
-            console.log("Image URL " + imgUrl);
-            $("#current-event-name").text(result.get("name"));
-            $("#current-event-date").text(formatDateLong(result.get("date")));
-            $("#card-current-event-name").text(result.get("name"));
-            $("#current-event-img").attr("src",imgUrl);
-            $("#card-current-event").attr("data-id", result.id);
-            upcomingEventList();
+            
         },
         error: function(error) {
            console.log("Failed to get current event. Error: " + error);
@@ -155,8 +165,23 @@ function displayEvents(events, eType) {
 }
 
 function loadFoodPage(eventId) {
-  getFoodList(eventId);
-  $.mobile.changePage( '#food', { transition: 'slide'} );
+  var Event = Parse.Object.extend("Event");
+  var query = new Parse.Query(Event);
+  query.get(eventId, {
+    success: function(event) {
+      $("#food-event-name").text(event.get("name"));
+      $("#food-event-date").text(formatDateLong(event.get("date")));
+
+      getFoodList(eventId);
+      $.mobile.changePage( '#food', { transition: 'slide'} );
+
+    },
+    error: function(object, error) {
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to retrieve object, with error code: ' + error.message);
+    }
+  });
 }
 
 function displayFoods(foods) {
@@ -290,6 +315,25 @@ function saveEvent() {
       // Execute any logic that should take place if the save fails.
       // error is a Parse.Error with an error code and description.
       alert('Failed to create new object, with error code: ' + error.message);
+    }
+  });
+}
+
+function getEventLite(eventId) {
+  var Event = Parse.Object.extend("Event");
+  var query = new Parse.Query(Event);
+  query.get(eventId, {
+    success: function(event) {
+      var eventDate = formatDateSimple(event.get("date"));
+      $('#eventEditModal').modal('show');
+      $("#eventEditName").val(event.get("name"));
+      $("#eventEditDate").val(eventDate);
+      $("#eventEditId").val(eventId);
+    },
+    error: function(object, error) {
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to retrieve object, with error code: ' + error.message);
     }
   });
 }

@@ -78,7 +78,7 @@
 	height: 310px;
 }
 .card-food-event {
-	padding-top: 100px;
+	padding-top: 150px;
 }
 .card-past-event {
 	/*background-color: #a9ccc4;*/
@@ -215,6 +215,11 @@
 .past-event {
 	background-color: #a9ccc4;
 	width: 100%;
+}
+
+.row-food-banner {
+	background-image: url('../img/event_banner.jpg');
+	height: 250px;
 }
 
 .section-title {
