@@ -189,6 +189,7 @@ function loadFoodPage(eventId) {
       $("#food-event-id").text(event.id);
       $("#food-event-name").text(event.get("name"));
       $("#food-event-date").text(formatDateLong(event.get("date")));
+      $("#food-event-date").attr("time", event.get("date").getTime());
 
       getFoodList(eventId);
       $.mobile.changePage( '#food', { transition: 'slide'} );
@@ -240,6 +241,13 @@ function displayFoods(foods) {
   var len = foods.length;
   $("#food-row").empty();
   var addBtnDiv = $("<button class='btn-add' data-toggle='modal' data-target='#foodModal'>+</button>");
+
+  var today = new Date();
+
+  if ( today.getTime() < $("#food-event-date").attr("time") ) {
+    pastEvent = false;
+  }
+
 
   for ( var i = 0 ; i < len ; i++ ) {
     var imgUrl = "";
@@ -294,6 +302,9 @@ function displayFoods(foods) {
 
     colDiv.append(imgDiv);
     colDiv.append(footerDiv);
+
+
+
     if ( pastEvent ) {
       colDiv.append(buttonPanelDiv);      
     }
