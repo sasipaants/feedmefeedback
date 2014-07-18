@@ -447,6 +447,7 @@ function saveFood() {
   food.save(null, {
     success: function(food) {
       $('#foodModal').modal('hide');
+      loadFoodPage($("#food-event-id").text());
     },
     error: function(food, error) {
       // Execute any logic that should take place if the save fails.
@@ -501,6 +502,8 @@ function updateFood() {
        
       food.save();
       $('#foodEditModal').modal('hide');
+      loadFoodPage($("#food-event-id").text());
+
     },
     error: function(object, error) {
       // The object was not retrieved successfully.
