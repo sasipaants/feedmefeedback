@@ -305,6 +305,25 @@ function incementDisLike(foodId) {
   });
 }
 
+function signIn() {
+  console.log($("#username").val());
+  var cookie = "username="+$("#username").val()+"; expires=Fri, 25 Jul 2014 20:47:11 UTC; domain=http://feedmefeedback.parseapp.com/";
+  document.cookie= cookie;
+  alert(document.cookie)
+  $('#signinModal').modal('hide');
+
+  var name = "username=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) != -1) {
+          console.log("username = "+c.substring(name.length,c.length));
+        }
+    }
+    return "";
+}
+
 function formatParseDate(time, timezone) {
   try {
   	console.log("Convert Date WITH timezone" + time);  	
