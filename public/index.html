@@ -6,6 +6,7 @@
     <title>FeedMeFeedback</title>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/bootstrap-theme.css">
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css">
     <link rel="stylesheet" href="css/feedmefeedback.css">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -15,6 +16,7 @@
     <script src="js/moment.min.js"></script>
     <script src="js/moment-timezone.min.js"></script>
     <script src="js/moment-timezone-data.js"></script>
+    <script src="js/jquery.mobile-1.4.2.min.js"></script>
     </style>
   </head>
   <body>
@@ -27,24 +29,32 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">FeedMeFeedback</a>
+          <a class="header-name" href="">Feed me Feedback</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li class="active"><a href="./">Sign In</a></li>
+            <li ><a class="header-menu" href="#current-event">CURRENT</a></li>
+            <li ><a class="header-menu" href="#upcoming-event">UPCOMING</a></li>
+            <li ><a class="header-menu" href="#current-event">PAST</a></li>
+
+            <li class="active"><a class="header-menu" href="./">SIGN IN</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div> <!-- end navbar -->
-    <div class="current-event">
+    <div id="event" data-role="page">
+    <div id="current-event" class="current-event">
       <div class="container main-container">
-        <ol class="breadcrumb">
-          <li class="active">Current Event</li>
-        </ol>
         <!-- Three columns of text below the carousel -->
         <div class="row">
-          <div class="col-md-4 card-event card-current-event">
-            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+          <div class="col-md-8 card-current-event">
+            <div class="section-title current-section-title">
+              Current
+            </div>  
+            
+          </div><!-- /.col-lg-3 -->
+          <div class="col-md-4 card-event card-current-event" onclick="$.mobile.changePage( '#food', { transition: 'slide'} )">
+            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
             <div class="card-footer">
               Heading
             </div>
@@ -53,25 +63,25 @@
         </div><!-- /.row -->
       </div>
     </div> <!-- end upcoming event -->
-    <div class="upcoming-event">
+    <div id="upcoming-event" class="upcoming-event">
       <div class="container main-container">
-        <ol class="breadcrumb">
-          <li class="active">Upcoming Event</li>
-        </ol>
+        <div class="section-title upcoming-section-title">
+          Upcoming
+        </div>  
         <!-- Three columns of text below the carousel -->
         <div class="row">
           <div class="col-md-4 card-event card-upcoming-event">
-            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
             <h2>Heading</h2>
             
           </div><!-- /.col-lg-3 -->
           <div class="col-md-4 card-event card-upcoming-event">
-            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
             <h2>Heading</h2>
             
           </div><!-- /.col-lg-3 -->
           <div class="col-md-4 card-event card-upcoming-event">
-            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
             
             <div class="card-footer">
               Heading
@@ -81,29 +91,34 @@
       </div>
     </div> <!-- end upcoming event -->
 
-    <div class="past-event">
+    <div id="past-event" class="past-event">
       <div class="container main-container">
-        <ol class="breadcrumb">
-          <li class="active">Past Event</li>
-        </ol>
+        <div class="section-title past-section-title">
+              Past
+        </div>  
         <!-- Three columns of text below the carousel -->
         <div class="row">
           <div class="col-md-4 card-event card-past-event">
-            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
             <h2>Heading</h2>
             
           </div><!-- /.col-lg-4 -->
           <div class="col-md-4 card-event card-past-event">
-            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
             <h2>Heading</h2>
             
           </div><!-- /.col-lg-4 -->
           <div class="col-md-4 card-event card-past-event">
-            <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" style="width: 140px; height: 140px;">
+            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
             <h2>Heading</h2>
           </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
       </div>
     </div>
+  </div> <!-- end of event page -->
+
+  <div id="food" data-role="page">
+      foood
+  </div><!-- end of food page -->
   </body>
 </html>

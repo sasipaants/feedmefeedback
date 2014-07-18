@@ -1,54 +1,9 @@
 $( document ).ready(function() {
-	Parse.initialize("Ok8ye4bKnOx8JM0dEt0oV6NqVwKDwvcYG9ztADdQ", "8HLbHfXM0qJM42K9UmJbCY0uFW0AIVw18tSEuCnm");
-    loggedInUser = null;
-
-    parseUsers = [];
-    parseUsers["ldPENlwqeu"] = "images/AGrimaldi.png";
-    parseUsers["zmryvletxu"] = "images/Angelo.png";
-    parseUsers["RqalfQsq7t"] = "images/bluesteel.JPG";
-
-    var cachedUser = Parse.User.current();
-        if ( cachedUser != null ) {
-            Parse.User.become(cachedUser._sessionToken).then(function(user) {
-                    loggedInUser = user;
-                    var hashpage = window.location.hash;
-                    switch (hashpage) {
-                        case "#login":
-                        case "":
-                            getMyShifts();
-                            $.mobile.changePage( '#myshifts', { transition: 'slide'} );
-                            break;
-                        case "#addshifts":
-                            break;
-                        case "#browseshifts":
-                            getShiftByStatus('OPEN');
-                            break;
-                        case "#manageemployees":
-                            break;
-                        case "#myshifts":
-                            console.log("#myshifts");
-                            getMyShifts();
-                            break;
-                        case "#myshiftmates":
-                            break;
-                        case "#shiftinfo":
-                            getShiftByStatus('OPEN');
-                            $.mobile.changePage( '#browseshifts', { transition: 'slide'} );                            
-                            break;
-                        case "#profile":
-                            break;
-                    }
-                }, function(error) {
-                    alert("Unable to log in. Error:  " + error.message);
-                });
-        } else {
-            $.mobile.changePage( '#login', { transition: 'slide'} );
-        }
-
+	Parse.initialize("GMS878qYQCgvB68FCzerFKq1TjcHZahOS2hphlRn", "RZcrn0SEBKcwJsvp3HAL7sNVKYPI2ZqMBAN43Jnp");
 });
 
 function currentEventList() {
-	var now = Date.now();
+	var now = new Date();
 	now.setHours(0,0,0,0);
 	var endDay = Date.now();
 	endDay.setHours(23,59,59,59);
@@ -78,7 +33,7 @@ function currentEventList() {
 }
 
 function upcomingEventList() {
-	var now = Date.now();
+	var now = new Date();
 	now.setHours(0,0,0,0);
 	now.setDate(now.getDate()+1);	// upcoming event starting tomorrow
     var Event = Parse.Object.extend("Event");
@@ -106,7 +61,7 @@ function upcomingEventList() {
 }
 
 function pastEventList() {
-	var now = Date.now();
+	var now = new Date();
 	now.setHours(0,0,0,0);
 	var Event = Parse.Object.extend("Event");
     var pastEventQuery = new Parse.Query(Event);
@@ -133,21 +88,21 @@ function pastEventList() {
 }
 
 function saveEvent() {
-  var Event = Parse.Object.extend("Event");
-  var event = new Event();
+  var MyEvent = Parse.Object.extend("Event");
+  var e = new MyEvent();
 
   var formElement = document.getElementById("createEventForm");
-   
-  event.set("name", formElement.elements["eventName"]);
-  event.set("date", formElement.elements["eventDate"]);
-  event.set("imagePath", formElement.elements["eventImage"]);
-   
-  event.save(null, {
-    success: function(event) {
+  console.log("3" + formElement.elements["eventName"]);
+  e.set("name", "test");
+  // e.set("date", formElement.elements["eventDate"]);
+  // e.set("imagePath", formElement.elements["eventImage"]);
+  console.log(e);
+  e.save(null, {
+    success: function(d) {
       // Execute any logic that should take place after the object is saved.
-      alert('New object created with objectId: ' + event.id);
+      alert('New object created with objectId: ' + d.id);
     },
-    error: function(event, error) {
+    error: function(d, error) {
       // Execute any logic that should take place if the save fails.
       // error is a Parse.Error with an error code and description.
       alert('Failed to create new object, with error code: ' + error.message);
