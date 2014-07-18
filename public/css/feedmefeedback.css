@@ -123,6 +123,22 @@
 	z-index:1151;
 }
 
-.modal-body{
-    max-height: 100%;
+.modal-header {
+	background-color: #535353;
+	color: #FFF;
 }
+
+.modal-footer {
+
+}
+
+.modal-footer .btn-primary {
+	background-color: #1d7865;
+	border-color: #1d7865;
+	color: #FFF;
+}
+
+.modal span {
+	color: #fff;
+}
+
