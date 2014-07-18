@@ -217,6 +217,59 @@ function saveFood() {
   });
 }
 
+function getFood(foodId) {
+  var Food = Parse.Object.extend("Food");
+  var query = new Parse.Query(Food);
+  query.get(foodId, {
+    success: function(food) {
+      $('#foodEditModal').modal('show');
+      $("#foodEditName").val(food.get("name"));
+      $("#foodEditDescription").val(food.get("description"));
+      $("#foodEditId").val(food.id);
+
+    },
+    error: function(object, error) {
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to retrieve object, with error code: ' + error.message);
+    }
+  });
+}
+
+function updateFood() {
+  var foodId = $("#foodEditId").val();
+  var Food = Parse.Object.extend("Food");
+  var query = new Parse.Query(Food);
+  query.get(foodId, {
+    success: function(food) {
+      var fileUploadControl = $("#foodEditImage")[0];
+      if (fileUploadControl.files.length > 0) {
+        var file = fileUploadControl.files[0];
+        var name = "food.jpg";
+       
+        var parseFile = new Parse.File(name, file);
+
+        parseFile.save().then(function() {
+        }, function(error) {
+          alert('Failed to upload image: ' + error.message);
+        });
+        food.set("image", parseFile);
+      }
+
+      food.set("name", $("#foodEditName").val());
+      food.set("description", $("#foodEditDescription").val());
+       
+      food.save();
+      $('#foodEditModal').modal('hide');
+    },
+    error: function(object, error) {
+      // The object was not retrieved successfully.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to retrieve object, with error code: ' + error.message);
+    }
+  });
+}
+
 function incementLike(foodId) {
   var Food = Parse.Object.extend("Food");
   var query = new Parse.Query(Food);
