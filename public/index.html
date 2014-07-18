@@ -156,35 +156,45 @@
       <div class="container main-container" style="padding-top:30px;">
         <div class="row">
 
-
-          <div class="col-md-4 card-food card-current-event" onclick="$.mobile.changePage( '#food', { transition: 'slide'} )">
-            <img class="img-square" src="" alt="Generic placeholder image">
-            <div class="card-footer" id="card-current-event-name">
-              <div class="card-footer">
-               Hack Day
-               <div class="card-footer-date">
-                 July 17, 2014
+          <div class="card-admin">
+            <div class="col-md-4 card-food card-current-event" onclick="$.mobile.changePage( '#food', { transition: 'slide'} )">
+              <img class="img-square" src="" alt="Generic placeholder image">
+              <div class="card-footer" id="card-current-event-name">
+                <div class="card-footer">
+                 Hack Day
+                 <div class="card-footer-date">
+                   July 17, 2014
+                 </div>
                </div>
-             </div>
-            </div>
-            <div class="card-button-panel">
-              <div class="panel-dislike">
-                <img class="btn-vote btn-dislike" src="img/btn-dislike.png"/>
-                <p class="count-dislike">5</p>
               </div>
-              <div class="panel-like">
-                <img class="btn-vote btn-like" src="img/btn-like.png"/>
-                <p class="count-like">5</p>
+              <div class="card-button-panel">
+                <div class="panel-dislike">
+                  <img class="btn-vote btn-dislike" src="img/btn-dislike.png"/>
+                  <p class="count-dislike">5</p>
+                </div>
+                <div class="panel-like">
+                  <img class="btn-vote btn-like" src="img/btn-like.png"/>
+                  <p class="count-like">5</p>
+                </div>
+                
               </div>
-              
+            </div><!-- /.col-lg-3 -->
+            
+            <div class="edit-panel" onclick="getFood('id1')">
+              EDIT
             </div>
-          </div><!-- /.col-lg-3 -->
-          
-        </div><!-- /.row -->
+            <!-- <img src="img/editicon.png" class="edit-icon" /> -->
+          </div><!-- /.row -->
+        </div>
+
 
 
       </div>
     </div>
+
+    <button class="btn-add" data-toggle="modal" data-target="#myModal">+</button>
+
+
   </div><!-- end of food page -->
   </body>
 </html>

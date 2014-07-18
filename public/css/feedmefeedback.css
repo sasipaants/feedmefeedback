@@ -8,7 +8,7 @@
 	position: absolute;
 	right: 0%;
 	width: 50px !important;
-	bottom: 10%;
+	top: 35%;
 	border-radius: 0px !important;
 	border-color: #1d7865 !important;
 	color: white !important;
@@ -21,6 +21,11 @@
 }
 .breadcrumb {
 	border-radius: 0px;
+}
+
+.card-admin {
+	width: 235px;
+	box-shadow: 3px 3px 5px rgb(95, 94, 94);
 }
 
 .card-button-panel {
@@ -42,7 +47,7 @@
 	background-color: #fff;
 	box-shadow: 3px 3px 5px rgb(95, 94, 94);
 	cursor: pointer;
-	margin: 6px;
+	/*margin: 6px;*/
 	padding: 15px;
 	width: 235px;
 	height: 310px;
@@ -80,12 +85,12 @@
 }
 
 .count-dislike {
-	color: #;
+	color: #d64608;
 	text-align: center;
 }
 
 .count-like {
-	color: #;
+	color: #1d7865;
 	text-align: center;
 }
 
@@ -104,6 +109,17 @@
 #current-event-date {
 	color: white;
 	text-transform:uppercase;
+}
+.edit-icon {
+	right: 10px;
+	width: 15px;
+}
+.edit-panel {
+	background-color: #535353;	
+	color: white;
+	cursor: pointer;
+	text-align: center;	
+	padding-bottom: 12px;
 }
 
 .food-banner {
