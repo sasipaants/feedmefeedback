@@ -240,6 +240,7 @@ function saveFood() {
     var parseFile = new Parse.File(name, file);
 
     parseFile.save().then(function() {
+
     }, function(error) {
       alert('Failed to upload image: ' + error.message);
     });
@@ -248,6 +249,8 @@ function saveFood() {
 
   food.set("name", $("#foodName").val());
   food.set("description", $("#foodDescription").val());
+  food.set("likes", 1);
+  food.set("dislikes", 1)
   //TODO: add eventId
   food.set("eventId", "");
 
