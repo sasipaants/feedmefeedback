@@ -94,6 +94,7 @@ function upcomingEventList() {
 function pastEventList() {
 	var now = new Date();
 	now.setHours(0,0,0,0);
+  console.log("now: " + now);
 	var Event = Parse.Object.extend("Event");
     var pastEventQuery = new Parse.Query(Event);
     pastEventQuery.limit(3);
@@ -252,11 +253,16 @@ function displayFoods(foods) {
       pastEventClass = " card-food-past ";
     }
 
+    var foodDescription = foods[i].get("description");
+    if (foodDescription.length > 27) {
+      foodDescription = foodDescription.substring(0, 27) + "...";
+    }
+
     var cardDiv = $("<div class='card-admin'></div>");
     var colDiv = $("<div id='"+foods[i].id+"' class='col-md-4 card-food "+ pastEventClass+"'></div>");
     var imgDiv = $("<img class='img-square' src='"+ imgUrl +"' />");
     var footerDiv = $("<div class='card-footer'>"+ foods[i].get("name") 
-      +"<div class='card-footer-date'>"+ (foods[i].get("description")) +"</div></div>");
+      +"<div class='card-footer-date'>"+ (foodDescription) +"</a></div></div>");
     var buttonPanelDiv = $("<div class='card-button-panel'></div>");
     var dislikePanelDiv = $("<div id='panel-dislike-"+foods[i].id+"' data-id='"+foods[i].id+"' class='panel-dislike'></div>"); 
     var commentPanelDiv = $("<div id='panel-comment-"+foods[i].id+"' data-id='"+foods[i].id+"' class='panel-comment'></div>"); 
