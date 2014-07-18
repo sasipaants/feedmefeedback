@@ -20,7 +20,14 @@
 	width: 100%;
 	padding: 15px;
 	position: absolute;*/
+	margin-top: 10px;
+	text-transform:uppercase;
 
+}
+
+.card-footer-date {
+	color: #858080;
+	font-size: 12px;
 }
 
 .card-current-event {
@@ -40,6 +47,18 @@
 	width: 100%;
 }
 
+#current-event-name {
+	color: white;
+	font-size: 20px;
+	margin-top: -40px;
+	text-transform:uppercase;
+}
+
+#current-event-date {
+	color: white;
+	text-transform:uppercase;
+}
+
 .header-name {
 	color: #ff831e;
 	font-size: 30px;
@@ -49,9 +68,21 @@
 .header-menu {
 	font-size: 11px;
 }
+
+.main-container-top {
+	padding-top: 85px;
+}
 .main-container {
-	padding-top: 80px;
-	padding-bottom: 50px;
+	padding-bottom: 20px;
+}
+
+.mynav {
+	padding-top: 7px;
+}
+
+.mynav-active {
+	background-image: linear-gradient(to bottom, #1d7865 0%, #1d7865 100%) !important;
+	color: white !important;
 }
 
 .img-square {
@@ -65,11 +96,13 @@
 }
 
 .section-title {
-	font-size: 190px;
+	font-size: 100px;
 	font-family: "Harbell";
+	margin-bottom: -20px;
 }
 
 .current-section-title {
+	font-size: 160px;
 	color: #e47444;
 
 }
