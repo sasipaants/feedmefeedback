@@ -98,6 +98,7 @@ function pastEventList() {
     var pastEventQuery = new Parse.Query(Event);
     pastEventQuery.limit(3);
     pastEventQuery.lessThan("date", now);
+    pastEventQuery.descending("date");
     pastEventQuery.find({
         success: function(results) {
           console.log("Past event: " + JSON.stringify(results));
