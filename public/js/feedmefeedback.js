@@ -122,6 +122,40 @@ function saveEvent() {
   });
 }
 
+function editEvent() {
+  var Event = Parse.Object.extend("Event");
+  var event = new Event();
+  var eventDate = $("#eventDate").val();
+
+  var fileUploadControl = $("#eventImage")[0];
+  if (fileUploadControl.files.length > 0) {
+    var file = fileUploadControl.files[0];
+    var name = "photo.jpg";
+   
+    var parseFile = new Parse.File(name, file);
+
+    parseFile.save().then(function() {
+    }, function(error) {
+      alert('Failed to upload image: ' + error.message);
+    });
+    event.set("image", parseFile);
+  }
+
+  event.set("name", $("#eventName").val());
+  event.set("date", new Date(eventDate));
+   
+  event.save(null, {
+    success: function(event) {
+      $('#eventModal').modal('hide');
+    },
+    error: function(d, error) {
+      // Execute any logic that should take place if the save fails.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to create new object, with error code: ' + error.message);
+    }
+  });
+}
+
 function saveFood() {
   var Food = Parse.Object.extend("Food");
   var food = new Food();
@@ -140,11 +174,11 @@ function saveFood() {
     food.set("image", parseFile);
   }
 
-  food.set("name", $("foodName").val())
+  food.set("name", $("#foodName").val());
   food.set("description", $("#foodDescription").val());
   //TODO: add eventId
   food.set("eventId", "");
-   
+
   food.save(null, {
     success: function(food) {
       $('#foodModal').modal('hide');
@@ -153,6 +187,7 @@ function saveFood() {
       // Execute any logic that should take place if the save fails.
       // error is a Parse.Error with an error code and description.
       alert('Failed to create new object, with error code: ' + error.message);
+      alert('food: ' + food.toJSON());
     }
   });
 }
