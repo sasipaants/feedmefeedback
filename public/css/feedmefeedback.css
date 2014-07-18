@@ -8,7 +8,7 @@
 	position: absolute;
 	right: 0%;
 	width: 50px !important;
-	top: 35%;
+	top: 375px;
 	border-radius: 0px !important;
 	border-color: #1d7865 !important;
 	color: white !important;
@@ -54,7 +54,7 @@
 	/*margin: 6px;*/
 	padding: 15px;
 	width: 235px;
-	height: 310px;
+	height: 235px;
 
 }
 
@@ -74,8 +74,8 @@
 	font-size: 12px;
 }
 
-.card-current-event {
-	/*background-color: #d64608;*/
+.card-food-past {
+	height: 310px;
 }
 .card-food-event {
 	padding-top: 100px;
@@ -124,11 +124,18 @@
 	width: 15px;
 }
 .edit-panel {
-	background-color: #535353;	
+	background-color: #535353;
 	color: white;
 	cursor: pointer;
-	text-align: center;	
+	text-align: center;
 	padding-bottom: 12px;
+	height: 30px;
+	padding-top: 5px;
+	width: 235px;
+}
+
+.edit-text {
+	margin-bottom: 0px;
 }
 
 .food-banner {
