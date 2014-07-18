@@ -1,5 +1,11 @@
 $( document ).ready(function() {
+<<<<<<< Updated upstream
 	Parse.initialize("GMS878qYQCgvB68FCzerFKq1TjcHZahOS2hphlRn", "RZcrn0SEBKcwJsvp3HAL7sNVKYPI2ZqMBAN43Jnp");
+=======
+  Parse.initialize("GMS878qYQCgvB68FCzerFKq1TjcHZahOS2hphlRn", "RZcrn0SEBKcwJsvp3HAL7sNVKYPI2ZqMBAN43Jnp");
+  $('#eventDate').datepicker();
+
+>>>>>>> Stashed changes
 });
 
 function getEvents() {
@@ -83,6 +89,7 @@ function pastEventList() {
 }
 
 function saveEvent() {
+<<<<<<< Updated upstream
   var MyEvent = Parse.Object.extend("Event");
   var e = new MyEvent();
 
@@ -96,8 +103,69 @@ function saveEvent() {
     success: function(d) {
       // Execute any logic that should take place after the object is saved.
       alert('New object created with objectId: ' + d.id);
+=======
+  var Event = Parse.Object.extend("Event");
+  var event = new Event();
+  var eventDate = $("#eventDate").val();
+
+  var fileUploadControl = $("#eventImage")[0];
+  if (fileUploadControl.files.length > 0) {
+    var file = fileUploadControl.files[0];
+    var name = "photo.jpg";
+   
+    var parseFile = new Parse.File(name, file);
+
+    parseFile.save().then(function() {
+    }, function(error) {
+      alert('Failed to upload image: ' + error.message);
+    });
+    event.set("image", parseFile);
+  }
+
+  event.set("name", $("#eventName").val());
+  event.set("date", new Date(eventDate));
+   
+  event.save(null, {
+    success: function(event) {
+      $('#eventModal').modal('hide');
+>>>>>>> Stashed changes
     },
     error: function(d, error) {
+      // Execute any logic that should take place if the save fails.
+      // error is a Parse.Error with an error code and description.
+      alert('Failed to create new object, with error code: ' + error.message);
+    }
+  });
+}
+
+function saveFood() {
+  var Food = Parse.Object.extend("Food");
+  var food = new Food();
+
+  var fileUploadControl = $("#foodImage")[0];
+  if (fileUploadControl.files.length > 0) {
+    var file = fileUploadControl.files[0];
+    var name = "food.jpg";
+   
+    var parseFile = new Parse.File(name, file);
+
+    parseFile.save().then(function() {
+    }, function(error) {
+      alert('Failed to upload image: ' + error.message);
+    });
+    food.set("image", parseFile);
+  }
+
+  food.set("name", $("foodName").val())
+  food.set("description", $("#foodDescription").val());
+  //TODO: add eventId
+  food.set("eventId", "");
+   
+  food.save(null, {
+    success: function(food) {
+      $('#foodModal').modal('hide');
+    },
+    error: function(food, error) {
       // Execute any logic that should take place if the save fails.
       // error is a Parse.Error with an error code and description.
       alert('Failed to create new object, with error code: ' + error.message);
@@ -135,3 +203,4 @@ function formatTime(time, timezone) {
     return moment(time).format('h:mm A');
   }
 }
+
