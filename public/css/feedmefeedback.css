@@ -2,16 +2,51 @@
     font-family: "Harbell";
     src: url(../fonts/Harbell_Personal_Use.ttf) format("truetype");
 }
+
+.btn-add {
+	background-image: linear-gradient(to bottom, #1d7865 0%, #1d7865 100%) !important;
+	position: absolute;
+	right: 0%;
+	width: 50px !important;
+	bottom: 10%;
+	border-radius: 0px !important;
+	border-color: #1d7865 !important;
+	color: white !important;
+	font-size: 30px;
+}
+
+
+.btn-vote {
+	width: 40px;
+}
 .breadcrumb {
 	border-radius: 0px;
+}
+
+.card-button-panel {
+	padding-top: 10px;
+	position: relative;
 }
 .card-event {
 	background-color: #fff;
 	box-shadow: 3px 3px 5px rgb(95, 94, 94);
+	cursor: pointer;
 	margin: 6px;
 	padding: 15px;
 	width: 235px;
 	height: 235px;
+
+}
+
+.card-food {
+	background-color: #fff;
+	box-shadow: 3px 3px 5px rgb(95, 94, 94);
+	cursor: pointer;
+	margin: 6px;
+	padding: 15px;
+	width: 235px;
+	height: 310px;
+
 }
 
 .card-footer {
@@ -33,13 +68,25 @@
 .card-current-event {
 	/*background-color: #d64608;*/
 }
-
+.card-food-event {
+	padding-top: 100px;
+}
 .card-past-event {
 	/*background-color: #a9ccc4;*/
 }
 
 .card-upcoming-event {
 	/*background-color: #fff3e3;*/
+}
+
+.count-dislike {
+	color: #;
+	text-align: center;
+}
+
+.count-like {
+	color: #;
+	text-align: center;
 }
 
 .current-event {
@@ -59,6 +106,25 @@
 	text-transform:uppercase;
 }
 
+.food-banner {
+	background-color: #fff3e3;
+}
+
+.food-container {
+	padding-bottom: 20px;
+}
+#food-event-name {
+	color: white;
+	text-transform:uppercase;
+	font-size: 30px;
+}
+
+#food-event-date {
+	color: white;
+	text-transform:uppercase;
+	font-size: 20px;
+}
+
 .header-name {
 	color: #ff831e;
 	font-size: 30px;
@@ -67,6 +133,7 @@
 
 .header-menu {
 	font-size: 11px;
+	color: white !important;
 }
 
 .main-container-top {
@@ -81,13 +148,29 @@
 }
 
 .mynav-active {
-	background-image: linear-gradient(to bottom, #1d7865 0%, #1d7865 100%) !important;
+	background-image: linear-gradient(to bottom, #ff6400 0%, #ff6400 100%) !important;
 	color: white !important;
 }
 
+.mynavbar {
+	background-color: #535353;
+	background-image: linear-gradient(to bottom, #535353 0%, #535353 100%)!important;
+}
 .img-square {
 	height: 160px;
 	width: 100%;
+}
+
+
+.panel-dislike {
+	position: absolute;
+
+}
+
+.panel-like {
+	position: absolute;
+	right: 0;
+	top: 10px;
 }
 
 .past-event {

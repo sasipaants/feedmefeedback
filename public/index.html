@@ -22,7 +22,7 @@
     </style>
   </head>
   <body>
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="navbar navbar-default navbar-fixed-top mynavbar" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -34,7 +34,7 @@
           <img src="img/logo.png" style="width: 50px; margin-right: 10px;"/><img src="img/logotype.png" style="width: 90px;"/>
           <!-- <a class="header-name" href="">Feed me Feedback</a> -->
         </div>
-        <div class="navbar-collapse collapse">
+        <div class="navbar-collapse collapse mynavbar">
           <ul class="nav navbar-nav navbar-right mynav">
             <li ><a class="header-menu" href="#current-event">CURRENT</a></li>
             <li ><a class="header-menu" href="#upcoming-event">UPCOMING</a></li>
@@ -56,23 +56,23 @@
               Current
             </div>
             <div id="current-event-name">
-              HACK DAY 2014
+              
             </div>  
             <div id="current-event-date">
-              JULY 17, 2014
+              
             </div>
             
           </div><!-- /.col-lg-3 -->
           <div class="col-md-4 card-event card-current-event" onclick="$.mobile.changePage( '#food', { transition: 'slide'} )">
-            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
-            <div class="card-footer">
-              Heading
+            <img class="img-square" id="current-event-img" src="" alt="Generic placeholder image">
+            <div class="card-footer" id="card-current-event-name">
+              
             </div>
             
           </div><!-- /.col-lg-3 -->
         </div><!-- /.row -->
       </div>
-    </div> <!-- end upcoming event -->
+    </div> <!-- end current event -->
     <a name="upcoming-event"></a>
     <div id="upcoming-event" name="upcoming-event" class="upcoming-event">
       <div class="container main-container">
@@ -80,37 +80,8 @@
           Upcoming
         </div>  
         <!-- Three columns of text below the carousel -->
-        <div class="row">
-          <div class="col-md-4 card-event card-upcoming-event">
-            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
-            <div class="card-footer">
-              Hack Day
-              <div class="card-footer-date">
-                July 17, 2014
-              </div>
-            </div>
-            
-          </div><!-- /.col-lg-3 -->
-          <div class="col-md-4 card-event card-upcoming-event">
-            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
-            <div class="card-footer">
-              Hack Day
-              <div class="card-footer-date">
-                July 17, 2014
-              </div>
-            </div>
-            
-          </div><!-- /.col-lg-3 -->
-          <div class="col-md-4 card-event card-upcoming-event">
-            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
-            
-            <div class="card-footer">
-              Hack Day
-              <div class="card-footer-date">
-                July 17, 2014
-              </div>
-            </div>
-          </div><!-- /.col-lg-3 -->
+        <div class="row" id="upcoming-event-row">
+          
         </div><!-- /.row -->
       </div>
     </div> <!-- end upcoming event -->
@@ -122,42 +93,11 @@
               Past
         </div>  
         <!-- Three columns of text below the carousel -->
-        <div class="row">
-          <div class="col-md-4 card-event card-past-event">
-            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
-            <div class="card-footer">
-              Hack Day
-              <div class="card-footer-date">
-                July 17, 2014
-              </div>
-            </div>
-            
-          </div><!-- /.col-lg-4 -->
-          <div class="col-md-4 card-event card-past-event">
-            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
-            <div class="card-footer">
-              Hack Day
-              <div class="card-footer-date">
-                July 17, 2014
-              </div>
-            </div>
-            
-          </div><!-- /.col-lg-4 -->
-          <div class="col-md-4 card-event card-past-event">
-            <img class="img-square" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image">
-            <div class="card-footer">
-              Hack Day
-              <div class="card-footer-date">
-                July 17, 2014
-              </div>
-            </div>
-          </div><!-- /.col-lg-4 -->
+        <div class="row" id="past-event-row">
 
         </div><!-- /.row -->
 
-              <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-        Add an Event
-      </button>
+        <button class="btn-add" data-toggle="modal" data-target="#myModal">+</button>
 
       <!-- Modal -->
       <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -202,7 +142,49 @@
   </div> <!-- end of event page -->
 
   <div id="food" data-role="page">
-      foood
+    <div class="row">
+      <div class="container food-container">
+        <div class="col-md-8 card-food-event">
+          <div id="food-event-name">Hack day</div>  
+          <div id="food-event-date">July 2014</div>
+        </div><!-- /.col-md-8 -->
+      </div>
+      
+    </div><!-- /.row -->
+
+    <div id="food-banner" class="food-banner">
+      <div class="container main-container" style="padding-top:30px;">
+        <div class="row">
+
+
+          <div class="col-md-4 card-food card-current-event" onclick="$.mobile.changePage( '#food', { transition: 'slide'} )">
+            <img class="img-square" src="" alt="Generic placeholder image">
+            <div class="card-footer" id="card-current-event-name">
+              <div class="card-footer">
+               Hack Day
+               <div class="card-footer-date">
+                 July 17, 2014
+               </div>
+             </div>
+            </div>
+            <div class="card-button-panel">
+              <div class="panel-dislike">
+                <img class="btn-vote btn-dislike" src="img/btn-dislike.png"/>
+                <p class="count-dislike">5</p>
+              </div>
+              <div class="panel-like">
+                <img class="btn-vote btn-like" src="img/btn-like.png"/>
+                <p class="count-like">5</p>
+              </div>
+              
+            </div>
+          </div><!-- /.col-lg-3 -->
+          
+        </div><!-- /.row -->
+
+
+      </div>
+    </div>
   </div><!-- end of food page -->
   </body>
 </html>
